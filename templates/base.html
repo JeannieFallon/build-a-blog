@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Build-a-blog</title>
+  <style>
+    body {
+      background-color: grey;
+      font-family: "Courier New", Courier, monospace;
+      text-align: center;
+      margin: auto;
+      width: 50%;
+      padding: 10px;
+    }
+    .error {
+      color: red;
+    }
+    .project_name {
+      color: blue;
+      text-shadow: 1px 1px #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="project_name">build-a-blog</h1>
+  <form method="post">
+    <label>
+      <div>title</div>
+      <input type="text" name="title" value={{title}}>
+    </label>
+    <label>
+      <div>blog post</div>
+      <textarea name="blog_post">{{blog_post}}</textarea>
+    </label>
+    <div class="error">{{error}}</div>
+    <input type="submit">
+  </form>
+
+</body>
+</html>
