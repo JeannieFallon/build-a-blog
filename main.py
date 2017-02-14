@@ -37,7 +37,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler):
     def get(self):
-        self.render("base.html")
+        self.render("main_blog.html")
 
     def post(self):
         title = self.request.get("title")
@@ -51,5 +51,5 @@ class MainPage(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage)
+    ('/blog', MainPage),
 ], debug=True)

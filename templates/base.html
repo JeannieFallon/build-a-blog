@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Build-a-blog</title>
+  {% block head %}
+  {% endblock %}
   <style>
     body {
       background-color: grey;
@@ -14,26 +15,15 @@
     .error {
       color: red;
     }
-    .project_name {
+    .page_title {
       color: blue;
       text-shadow: 1px 1px #ffffff;
     }
   </style>
 </head>
 <body>
-  <h1 class="project_name">build-a-blog</h1>
-  <form method="post">
-    <label>
-      <div>title</div>
-      <input type="text" name="title" value={{title}}>
-    </label>
-    <label>
-      <div>blog post</div>
-      <textarea name="blog_post">{{blog_post}}</textarea>
-    </label>
-    <div class="error">{{error}}</div>
-    <input type="submit">
-  </form>
-
+  <h1 id="page_title" class="page_title">{% block page_title %}{% endblock %}</h1>
+  {% block content %}
+  {% endblock %}
 </body>
 </html>
