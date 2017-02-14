@@ -39,17 +39,25 @@ class MainPage(Handler):
     def get(self):
         self.render("main_blog.html")
 
-    def post(self):
-        title = self.request.get("title")
-        blog_post = self.request.get("blog_post")
 
-        if title and blog_post:
-            self.write("thanks a million!")
-        else:
-            error = "REJECTED"
-            self.write(error)
+
+class NewPost(Handler):
+    def get(self):
+        self.render("new_post.html")
+
+    def post(self):
+        def post(self):
+            title = self.request.get("title")
+            blog_post = self.request.get("blog_post")
+
+            if title and blog_post:
+                self.write("thanks a million!")
+            else:
+                error = "REJECTED"
+                self.write(error)
 
 
 app = webapp2.WSGIApplication([
     ('/blog', MainPage),
+    ('/newpost', NewPost)
 ], debug=True)
