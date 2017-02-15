@@ -8,10 +8,15 @@
 {% endblock %}
 
 {% block content %}
-{% for post in posts %}
-  <div class="Posts">
-    <div class="blog-title">{{Archive.title}}</div>
-    <pre class="blog-body">{{Archive.blog_post}}</pre>
-  </div>
-{% endfor %}
+  {% for post in posts %}
+    {{ p.render() | safe }}
+  {% endfor %}
 {% endblock %}
+
+
+<!--
+<div class="Posts">
+  <div class="blog-title">{{Archive.title}}</div>
+  <pre class="blog-body">{{Archive.blog_post}}</pre>
+</div>
+-->

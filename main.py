@@ -41,11 +41,21 @@ class Archive(db.Model):
     blog_post = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
+    def render(self):
+        self._render_text = self.content.replace('\n','<br>')
+        return render_str("main_blog.html", p = self)
+
+
+class Index(Handler):
+    def get(self):
+        self.render("index.html")
+
 
 class MainPage(Handler):
     def get(self):
         posts = db.GqlQuery("SELECT * FROM Archive")
         self.render("main_blog.html", posts = posts)
+
 
 class NewPost(Handler):
     def get(self):
@@ -56,15 +66,17 @@ class NewPost(Handler):
         blog_post = self.request.get("blog_post")
 
         if title and blog_post:
-            p = Archive(title=title,blog_post=blog_post)
-            p.put()
+# something is wrong with this call to the database Archive class
+#            p = Archive(title=title,blog_post=blog_post)
+#            p.put()
             self.redirect('/blog')
         else:
-            error = "REJECTED"
-            self.render("new_post.html",title=title,blog_post=blog_post)
+            error = "Please enter both title and content for your post."
+            self.render("new_post.html",title=title,blog_post=blog_post,error=error)
 
 
 app = webapp2.WSGIApplication([
+    ('/', Index),
     ('/blog', MainPage),
     ('/blog/newpost', NewPost)
 ], debug=True)
