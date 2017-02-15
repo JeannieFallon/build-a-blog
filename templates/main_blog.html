@@ -2,9 +2,16 @@
 {% block head %}
   <title>main</title>
 {% endblock %}
-{% block page_title %}build-a-blog{% endblock %}
+
+{% block new_post %}
+<a href="/blog/newpost" class="new_post">new post</a>
+{% endblock %}
+
 {% block content %}
-<form method="post">
-  <label>Ira furor brevis est. Animum rege: qui nisi paret, imparet</label>
-</form>
+{% for post in posts %}
+  <div class="Posts">
+    <div class="blog-title">{{Archive.title}}</div>
+    <pre class="blog-body">{{Archive.blog_post}}</pre>
+  </div>
+{% endfor %}
 {% endblock %}

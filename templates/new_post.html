@@ -2,7 +2,7 @@
 {% block head %}
 <title>new post</title>
 {% endblock %}
-{% block page_title %}new post{% endblock %}
+
 {% block content %}
 <form method="post">
   <label>
@@ -14,6 +14,6 @@
     <textarea name="blog_post">{{blog_post}}</textarea>
   </label>
   <div class="error">{{error}}</div>
-  <input type="submit">
+  <input type="submit" value="SUBMIT">
 </form>
 {% endblock %}

@@ -35,29 +35,36 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
+
+class Archive(db.Model):
+    title = db.StringProperty(required=True)
+    blog_post = db.TextProperty(required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
+
 class MainPage(Handler):
     def get(self):
-        self.render("main_blog.html")
-
-
+        posts = db.GqlQuery("SELECT * FROM Archive")
+        self.render("main_blog.html", posts = posts)
 
 class NewPost(Handler):
     def get(self):
         self.render("new_post.html")
 
     def post(self):
-        def post(self):
-            title = self.request.get("title")
-            blog_post = self.request.get("blog_post")
+        title = self.request.get("title")
+        blog_post = self.request.get("blog_post")
 
-            if title and blog_post:
-                self.write("thanks a million!")
-            else:
-                error = "REJECTED"
-                self.write(error)
+        if title and blog_post:
+            p = Archive(title=title,blog_post=blog_post)
+            p.put()
+            self.redirect('/blog')
+        else:
+            error = "REJECTED"
+            self.render("new_post.html",title=title,blog_post=blog_post)
 
 
 app = webapp2.WSGIApplication([
     ('/blog', MainPage),
-    ('/newpost', NewPost)
+    ('/blog/newpost', NewPost)
 ], debug=True)

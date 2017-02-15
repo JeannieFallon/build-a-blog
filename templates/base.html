@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
   {% block head %}
   {% endblock %}
-  <style>
-    body {
-      background-color: grey;
-      font-family: "Courier New", Courier, monospace;
-      text-align: center;
-      margin: auto;
-      width: 50%;
-      padding: 10px;
-    }
-    .error {
-      color: red;
-    }
-    .page_title {
-      color: blue;
-      text-shadow: 1px 1px #ffffff;
-    }
-  </style>
 </head>
 <body>
-  <h1 id="page_title" class="page_title">{% block page_title %}{% endblock %}</h1>
+  <a href="/blog" class="page_title">Build-a-blog</a>
+  <hr>
+  {% block new_post %}
+  {% endblock %}
   {% block content %}
   {% endblock %}
 </body>
