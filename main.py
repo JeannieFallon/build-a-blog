@@ -41,10 +41,6 @@ class Archive(db.Model):
     blog_post = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
-    def render(self):
-        self._render_text = self.content.replace('\n','<br>')
-        return render_str("main_blog.html", p = self)
-
 
 class Index(Handler):
     def get(self):
@@ -53,8 +49,12 @@ class Index(Handler):
 
 class MainPage(Handler):
     def get(self):
-        posts = db.GqlQuery("SELECT * FROM Archive")
+        posts = db.GqlQuery("SELECT * FROM Archive ORDER BY created DESC LIMIT 5")
         self.render("main_blog.html", posts = posts)
+
+    #def render(self, *a, **kw):
+        #self._render_text = self.content.replace('\n','<br>')
+        #return render_str("main_blog.html", p = self)
 
 
 class NewPost(Handler):
@@ -66,9 +66,10 @@ class NewPost(Handler):
         blog_post = self.request.get("blog_post")
 
         if title and blog_post:
-# something is wrong with this call to the database Archive class
-#            p = Archive(title=title,blog_post=blog_post)
-#            p.put()
+# something is wrong with this call to the database Archive
+# why aren't posts storing? how to return entire database to check its contents?
+            p = Archive(title=title,blog_post=blog_post)
+            p.put()
             self.redirect('/blog')
         else:
             error = "Please enter both title and content for your post."

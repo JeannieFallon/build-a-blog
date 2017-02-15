@@ -5,12 +5,21 @@
 
 {% block new_post %}
 <a href="/blog/newpost" class="new_post">new post</a>
+<br><br>
 {% endblock %}
 
-{% block content %}
+{% block blog_post %}
+
   {% for post in posts %}
-    {{ p.render() | safe }}
+    <hr>
+    <strong>{{ post.title | safe }}</strong>
+    <br>
+    {{ post.blog_post | safe }}
+    <br>
+    <em>{{ post.created | safe }}</em>
+    <br><br>
   {% endfor %}
+
 {% endblock %}
 
 
