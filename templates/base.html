@@ -7,7 +7,7 @@
   -->
   <style>
   body {
-    background-color: grey;
+    background-color: #f0f8ff;
     font-family: "Courier New", Courier, monospace;
     text-align: center;
     margin: auto;
@@ -17,11 +17,12 @@
 
   .error {
     color: red;
+    font-size: 2em;
   }
 
   .page_title {
     color: blue;
-    text-shadow: 1px 1px #ffffff;
+    text-shadow: 1px 1px #000000;
     font-size: 4em;
     text-decoration: none;
   }
@@ -33,7 +34,7 @@
   }
 
   a:hover {
-  color: aqua;
+  color: #ff1493;
   }
   </style>
 
@@ -43,7 +44,7 @@
 </head>
 <body>
   <a href="/blog" class="page_title">Build-a-blog</a>
-  <hr>
+  <br>
   {% block new_post %}
   {% endblock %}
   {% block blog_post %}
