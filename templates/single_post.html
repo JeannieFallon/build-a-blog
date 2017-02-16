@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block head %}
+  <title>post view</title>
+{% endblock %}
+
+{% block new_post %}
+<a href="/blog/newpost" class="new_post">new post</a>
+<br><br>
+{% endblock %}
+
+{% block blog_post %}
+
+  {{aPost}}
+
+{% endblock %}

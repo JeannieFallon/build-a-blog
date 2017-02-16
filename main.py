@@ -66,18 +66,37 @@ class NewPost(Handler):
         blog_post = self.request.get("blog_post")
 
         if title and blog_post:
-# something is wrong with this call to the database Archive
-# why aren't posts storing? how to return entire database to check its contents?
-            p = Archive(title=title,blog_post=blog_post)
-            p.put()
-            self.redirect('/blog')
+            new_post = Archive(title=title,blog_post=blog_post)
+            new_post_key = new_post.put()
+            new_post_id = new_post_key.id()
+            self.redirect('/blog/%d' % new_post_id)
         else:
             error = "Please enter both title and content for your post."
             self.render("new_post.html",title=title,blog_post=blog_post,error=error)
 
 
+class ViewPostHandler(webapp2.RequestHandler):
+    def write(self, *a, **kw):
+        self.response.out.write(*a, **kw)
+
+    def render_str(self, template, **params):
+        t = jinja_env.get_template(template)
+        return t.render(params)
+
+    def render(self, template, **kw):
+        self.write(self.render_str(template, **kw))
+
+    def get(self, id):
+        aPost_id = int(id)
+        aPost = Archive.get_by_id (aPost_id, parent=None)
+        # aPost = "This is a test string." <<<This test works
+        self.render("single_post.html",aPost=aPost)
+
+
+
 app = webapp2.WSGIApplication([
     ('/', Index),
     ('/blog', MainPage),
-    ('/blog/newpost', NewPost)
+    ('/blog/newpost', NewPost),
+    webapp2.Route('/blog/<id:\d+>',ViewPostHandler)
 ], debug=True)
