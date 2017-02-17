@@ -12,8 +12,7 @@
 
   {% for post in posts %}
     <hr>
-    <strong>{{ post.title | safe }}</strong>
-    <br><br>
+    <h3><strong>{{ post.title | safe }}</strong></h3>
     {{ post.blog_post | safe }}
     <br>
     <em>{{ post.created | safe }}</em>

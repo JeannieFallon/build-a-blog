@@ -23,6 +23,8 @@ from google.appengine.ext import db
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                 autoescape = True)
+def blog_key(name = 'default'):
+    return db.Key.from_path('blogs', name)
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -36,7 +38,7 @@ class Handler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 
-class Archive(db.Model):
+class Post(db.Model):
     title = db.StringProperty(required=True)
     blog_post = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
@@ -49,7 +51,7 @@ class Index(Handler):
 
 class MainPage(Handler):
     def get(self):
-        posts = db.GqlQuery("SELECT * FROM Archive ORDER BY created DESC LIMIT 5")
+        posts = db.GqlQuery("SELECT * FROM Post ORDER BY created DESC LIMIT 5")
         self.render("main_blog.html", posts = posts)
 
     #def render(self, *a, **kw):
@@ -66,10 +68,10 @@ class NewPost(Handler):
         blog_post = self.request.get("blog_post")
 
         if title and blog_post:
-            new_post = Archive(title=title,blog_post=blog_post)
-            new_post_key = new_post.put()
-            new_post_id = new_post_key.id()
-            self.redirect('/blog/%d' % new_post_id)
+            new_post = Post(title=title,blog_post=blog_post)
+            new_post.put()
+            new_post_id = new_post.key().id()
+            self.redirect('/blog/%s' % new_post_id)
         else:
             error = "Please enter both title and content for your post."
             self.render("new_post.html",title=title,blog_post=blog_post,error=error)
@@ -87,10 +89,12 @@ class ViewPostHandler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
     def get(self, id):
-        aPost_id = int(id)
-        aPost = Archive.get_by_id (aPost_id, parent=None)
-        # aPost = "This is a test string." <<<This test works
-        self.render("single_post.html",aPost=aPost)
+        aPost = Post.get_by_id(int(id))
+        if not aPost:
+            aPost = "No post exists for that id."
+            self.render("single_post.html",post=aPost)
+        else:
+            self.render("single_post.html",post=aPost)
 
 
 

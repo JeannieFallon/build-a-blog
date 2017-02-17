@@ -15,10 +15,6 @@ handlers:
 - url: /stylesheets
   static_dir: stylesheets
 
-- url: /style.css
-  static_files: style.css
-  upload: style.css
-
 
 libraries:
 - name: webapp2

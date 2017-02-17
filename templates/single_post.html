@@ -9,7 +9,12 @@
 {% endblock %}
 
 {% block blog_post %}
-
-  {{aPost}}
+<hr>
+<h3><strong>{{ post.title }}</strong></h3>
+{{ post.blog_post }}
+<br>
+<em>{{ post.created }}</em>
+<br><br>
+{{ post.id }}
 
 {% endblock %}
